@@ -3,7 +3,40 @@
 
 Description
 -----------
-Convertir les entrées windows pour correspondre à un clavier apple A1243 et pouvoir utiliser des shortcuts type "apple" pour les application MAO et PAO.
+Convert windows inputs for work with an apple keyboard A1243 and use "apple like" shortcuts for MAO and PAO applications.
+
+### Specials Keys
+- cmd => ctrl
+- ctrl => ctrl (stay as is)
+- alt => alt (instead of windows key)
+
+- capslock is not working that well...
+
+- F1 to F12 => as is
+- F13 => emulation of the mac fn key (the fn mac key is not catch by my system)
+- F14 => SnippingTool
+- F15 => Windows key
+- F16 => My Docs (you should change the path)
+- F17 => My Computer
+- F18 => Launch my soundcard app (specific, you should change it)
+- F19 => Calculator
+- 
+** With F13 (fn mode)**
+- F1 => nothing
+- F2 => Minimize All windows
+- F3 => Undo Minimize
+- F4 => another windows key (see F15)
+- F5 => nothing
+- F6 => nothing
+- F7 => Previous media
+- F8 => Play/pause
+- F9 => Next media
+- F10 => Mute
+- F11 => Volume down
+- F12 => Volume up
+
+
+
 
 Todo V1.00
 ----------
@@ -18,7 +51,7 @@ Right Alt for spécials chars
 - Mapping Applications spé (calculatrice, snapshot, notepad, console) **DONE**
 
 ### Known issues :
--CapsLock is broken on spécials chars
+-CapsLock is broken on some specials chars
 
 
 Mapping Apple A1243
