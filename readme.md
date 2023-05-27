@@ -7,6 +7,7 @@ Convert windows inputs for work with an apple keyboard A1243 and use "apple like
 All macos specials chars are available with **Right Alt** key and **Right Alt+Shift** keys
 
 ² replace ë (still available with the windows standard method ¨+e)
+
 ÉÈÇÀÙ are available when you combine capslock+min (ex. capslock+é => É)
 
 ### Specials Keys
@@ -24,7 +25,8 @@ All macos specials chars are available with **Right Alt** key and **Right Alt+Sh
 - F17 => My Computer
 - F18 => Launch my soundcard app (specific, you should change it)
 - F19 => Calculator
-- 
+
+
 ** With F13 (fn mode)**
 - F1 => nothing
 - F2 => Minimize All windows
