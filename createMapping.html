@@ -1,0 +1,299 @@
+﻿<html>
+    <header></header>
+    <body><div id="screen"></div></body>
+<script>
+/************************************************/
+/*      ______________ __                       */
+/*     __________  __// /_  ___                 */
+/*              / __//   / /  /___________      */
+/*             /___//_/\_\/__ _____CODE__       */
+/*                                              */
+/*                                     (c) 2023 */
+/************************************************/
+//
+
+/************************************
+*
+* @file createMapping.html
+* @date 2023
+* @author ekoCode
+* @version 1.00
+*
+* @description 
+* Script for calculate differences betwen mac keyboard 
+* and windowskeboard and generate ahk script for warp 
+*
+*************************************/
+
+
+/*******************************************
+* Settings and Datas
+********************************************/
+
+ReplacementCharList= 
+[
+     ["#","{Raw}`#"]
+    ,["\"","`\""]
+    ,["ë","²"]
+    ,["!","{Raw}`!"]
+    ,["`","``"]
+    ,["^","{Raw}`^"]
+    ,["+","{Raw}`+"]
+    ,["{","{Raw}`{"]
+    ,["}","{Raw}`}"]
+]
+
+WindowsKeys         = "²&é\"'(-è_çà)=azertyuiop^$qsdfghjklmù*<wxcvbn,;:!=/*789-456+1230."
+WindowsKeysShift     = "²1234567890°+AZERTYUIOP¨£QSDFGHJKLM%µ>WXCVBN?./§=/*789-456+1230."
+WindowsKeysAltGr      = "~#{[|`\^@]}€¤"
+
+MacOsKeys           = "@&é\"'(§è!çà)-azertyuiop^$qsdfghjklmù`<wxcvbn,;:==/*789-456+1230,"
+MacOsKeysShift       = "#1234567890°_AZERTYUIOP¨*QSDFGHJKLM%£>WXCVBN?./+=/*789-456+1230."
+MacOsKeysAlt         = "•ë“‘{¶«¡Çø}—æÂê®†Úºîœπô€‡Ò∂ƒﬁÌÏÈ¬µÙ@≤‹≈©◊ß~∞…÷≠=/*789-456+1230,"
+MacOsKeysAltShift   = "Ÿ´„”’[å»ÛÁØ]–ÆÅÊ‚™ŸªïŒ∏Ô¥Ω∑∆·ﬂÎÍË|Ó‰#≥›⁄¢√∫ı¿•\\±=/*789-456+1230."
+
+
+SCArray =
+[
+//     VK     SC      Elapsed Key
+     [ "DE" , "029"	, "²"           ]   	
+    ,[ "31" , "002"	, "&"           ]
+    ,[ "32" , "003"	, "é"           ]   	
+    ,[ "33" , "004"	, "\""          ]   	
+    ,[ "34" , "005"	, "'"           ]   	
+    ,[ "35" , "006"	, "("           ]    	
+    ,[ "36" , "007"	, "-"           ]
+    ,[ "37" , "008"	, "è"           ]   	
+    ,[ "38" , "009"	, "_"           ]   	
+    ,[ "39" , "00A"	, "ç"           ]   	
+    ,[ "30" , "00B"	, "à"           ]   	
+    ,[ "DB" , "00C"	, ")"           ]   	
+    ,[ "BB" , "00D"	, "="           ] 
+    ,[ "41" , "010"	, "a"           ]  	
+    ,[ "5A" , "011"	, "z"           ]   	
+    ,[ "45" , "012"	, "e"           ]   	
+    ,[ "52" , "013"	, "r"           ]   	
+    ,[ "54" , "014"	, "t"           ]  	
+    ,[ "59" , "015"	, "y"           ]  	
+    ,[ "55" , "016"	, "u"           ]  	
+    ,[ "49" , "017"	, "i"           ]  	
+    ,[ "4F" , "018"	, "o"           ]   	
+    ,[ "50" , "019"	, "p"           ]   	
+    ,[ "DD" , "01A"	, "^"           ]   	
+    ,[ "BA" , "01B"	, "$"           ]
+    ,[ "51" , "01E"	, "q"           ]    	
+    ,[ "53" , "01F"	, "s"           ]   	
+    ,[ "44" , "020"	, "d"           ]   	
+    ,[ "46" , "021"	, "f"           ]  	
+    ,[ "47" , "022"	, "g"           ]   	
+    ,[ "48" , "023"	, "h"           ]   	
+    ,[ "4A" , "024"	, "j"           ]   	
+    ,[ "4B" , "025"	, "k"           ]  	
+    ,[ "4C" , "026"	, "l"           ]   	
+    ,[ "4D" , "027"	, "m"           ]   	
+    ,[ "C0" , "028"	, "ù"           ]  	
+    ,[ "DC" , "02B"	, "*"           ]
+    ,[ "E2" , "056"	, "<"           ]	
+    ,[ "57" , "02C"	, "w"           ]  	
+    ,[ "58" , "02D"	, "x"           ]   	
+    ,[ "43" , "02E"	, "c"           ]   	
+    ,[ "56" , "02F"	, "v"           ]   	
+    ,[ "42" , "030"	, "b"           ]  	
+    ,[ "4E" , "031"	, "n"           ]   	
+    ,[ "BC" , "032"	, ","           ]   	
+    ,[ "BE" , "033"	, ";"           ]   	
+    ,[ "BF" , "034"	, ":"           ]   	
+    ,[ "DF" , "035"	, "!"           ]
+    ,[ "0C" , "059"	, "NumpadClear" ]  	
+    ,[ "6F" , "135"	, "NumpadDiv"   ]   	
+    ,[ "6A" , "037"	, "NumpadMult"  ]
+    ,[ "67" , "047"	, "Numpad7"     ]  	
+    ,[ "68" , "048"	, "Numpad8"     ]  	
+    ,[ "69" , "049"	, "Numpad9"     ]
+    ,[ "6D" , "04A"	, "NumpadSub"   ]   	
+    ,[ "64" , "04B"	, "Numpad4"     ] 	
+    ,[ "65" , "04C"	, "Numpad5"     ]
+    ,[ "66" , "04D"	, "Numpad6"     ]  	
+    ,[ "6B" , "04E"	, "NumpadAdd"   ]   	
+    ,[ "61" , "04F"	, "Numpad1"     ]   	
+    ,[ "62" , "050"	, "Numpad2"     ]  	
+    ,[ "63" , "051"	, "Numpad3"    	]
+    ,[ "60" , "052"	, "Numpad0"     ]  	
+    ,[ "6E" , "053"	, "NumpadDot"   ]   	
+    ,[ "0D" , "11C"	, "NumpadEnter" ]
+]
+
+
+/*******************************************
+* UI
+********************************************/
+output = "";
+screenDiv = document.getElementById("screen")
+/*******************************************
+* Process
+********************************************/
+
+function testAllWindowsCharHaveKey()
+{
+    windowsChars = WindowsKeys+WindowsKeysShift+WindowsKeysAltGr
+    macChars = MacOsKeys+MacOsKeysShift+MacOsKeysAlt+MacOsKeysAltShift
+
+    for (let i = 0; i < windowsChars.length; i++) 
+    {
+        testChar = windowsChars[i]
+        if(macChars.includes(testChar))
+        {
+            output+=testChar+" Found<br>"
+        }
+        else
+        {
+     
+            output+='<b style="color:red;">'
+            output+=testChar+" Not Found<br>"
+            output+="</b>"
+
+        }
+    }   
+    
+}
+//testAllWindowsCharHaveKey()
+
+
+function replaceKeysProcess(comment,inputKeys,outputKeys,naturalKeys,tranformOperator)
+{
+    
+    if(comment!=undefined)
+    {
+        output+= "<br><br>"
+        output+= "; ###########################<br>"
+        output+= "; "+comment+"<br>"
+        
+    }
+    if(tranformOperator==undefined)
+    {
+        tranformOperator=""  
+    }
+   for (let i = 0; i < inputKeys.length; i++) 
+   {  
+        if(inputKeys[i]!=outputKeys[i])
+        {
+            
+            output+=tranformOperator
+            output+=naturalKeys[i]+"::"+outputKeys[i]
+            output+=" ; "+inputKeys[i]+" => "+outputKeys[i]
+            output+="<br>"
+        }    
+   } 
+}
+
+
+// replaceKeysProcess("Normal keys",WindowsKeys,MacOsKeys,WindowsKeys)
+// replaceKeysProcess("Shifted keys",WindowsKeysShift,MacOsKeysShift,WindowsKeys,"+")
+
+
+function generateAhkScript(comment,scArray,naturalKeys,naturalOutputKeys,shiftOutputKeys,altOutputKeys,shiftAltOutputKeys)
+{
+    
+    if(comment!=undefined)
+    {
+        output+= "<br><br>"
+        output+= "; ###########################<br>"
+        output+= "; "+comment+"<br>"
+        output+= "; Auto generate by createMapping.html<br>"
+        
+    }
+    // *SC007::minOrMaj("§","6")
+  
+
+   for (let i = 0; i < naturalKeys.length; i++) 
+   {       
+            commentLine=""
+            if((naturalKeys[i] == naturalOutputKeys[i]) 
+                && (naturalKeys[i] == shiftOutputKeys[i])
+                && (naturalKeys[i] == altOutputKeys[i])
+                && (naturalKeys[i] == shiftAltOutputKeys[i])
+                )
+                {
+                    commentLine="; "
+                }
+            output+=commentLine
+            output+="*SC"+scArray[i][1]
+            output+="::"
+            output+="minOrMaj(\""
+            
+            output+=rCH(naturalOutputKeys[i])+"\",\""
+            output+=rCH(shiftOutputKeys[i])+"\",\""
+            output+=rCH(altOutputKeys[i])+"\",\""
+            output+=rCH(shiftAltOutputKeys[i])+"\",\""
+
+            output+=scArray[i][0]+"\",\""
+            output+=scArray[i][1]+"\""
+
+            output+=")"
+            output+=" ; "+naturalKeys[i]+"=>"+naturalOutputKeys[i]
+            output+="<br>"
+    } 
+    if(comment!=undefined)
+    {
+        output+= "; ###########################<br>"
+        output+= "; End of "+comment+"<br>"
+    } 
+}
+
+function replaceCharHack(char)
+{
+    
+    for (let i = 0; i < ReplacementCharList.length; i++) {
+        console.log(char+" vs "+ReplacementCharList[i][0]);
+        if (char == ReplacementCharList[i][0])
+        {
+            return ReplacementCharList[i][1]
+        }        
+    }
+    return char;
+}
+//alias
+function rCH(char)
+{
+    return replaceCharHack(char)
+}
+
+generateAhkScript("keys switch",SCArray,WindowsKeys,MacOsKeys,MacOsKeysShift,MacOsKeysAlt,MacOsKeysAltShift)
+
+function TestCorrspondanceSC(SCArray,naturalKeys)
+{
+    for (let i = 0; i < naturalKeys.length; i++) 
+   {  
+        style=''
+        styleEnd=""
+        if(SCArray[i][2]!=naturalKeys[i])
+        {   
+            style='<b style="color:red;">'
+            styleEnd="</b>"
+        } 
+        
+            output+=style
+            output+=naturalKeys[i]
+            output+=" => "+SCArray[i][2]+" (SC:"+SCArray[i][1]+")"
+            output+=styleEnd
+            output+="<br>"
+   } 
+}
+// TestCorrspondanceSC(SCArray,WindowsKeys)
+
+
+function xor (a,b)
+{
+    result = (a != b) ? 1 : 0
+
+    output+=" "+a+" xor "+b+" = "+result+"<br/>"
+    return result
+}
+
+
+
+screenDiv.innerHTML=output
+
+</script>
+</html>
+
