@@ -4,6 +4,10 @@
 Description
 -----------
 Convert windows inputs for work with an apple keyboard A1243 and use "apple like" shortcuts for MAO and PAO applications.
+All macos specials chars are available with **Right Alt** key and **Right Alt+Shift** keys
+
+² replace ë (still available with the windows standard method ¨+e)
+ÉÈÇÀÙ are available when you combine capslock+min (ex. capslock+é => É)
 
 ### Specials Keys
 - cmd => ctrl
@@ -35,7 +39,13 @@ Convert windows inputs for work with an apple keyboard A1243 and use "apple like
 - F11 => Volume down
 - F12 => Volume up
 
+Install
+-------
 
+See how install an autohotkey script or try the exe in the release folder
+(NO WARANTY, IT'S YOUR CALL)
+compatible autohotkey v2
+more info : https://www.autohotkey.com/
 
 
 Todo V1.00
@@ -54,8 +64,10 @@ Right Alt for spécials chars
 -CapsLock is broken on some specials chars
 
 
-Mapping Apple A1243
--------------------
+DATAS
+-----
+
+## Mapping Apple A1243
 
 ### Natural
     @&é"'(§è!çà)-azertyuiop^$qsdfghjklmù`<wxcvbn,;:==/*789-456+1230,
