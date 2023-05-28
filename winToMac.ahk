@@ -27,8 +27,8 @@
 ; ########################
 
 ; touche Windows -> cmd
-LWin::LControl
-RWin::RControl
+*LWin::LControl
+*RWin::RControl
 
 ; ###########################################################################
 ;
